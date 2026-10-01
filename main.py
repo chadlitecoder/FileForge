@@ -8,8 +8,10 @@ Some commands: quantity,tree,restore,repeat\n''')
 
 rawpath=Path("C:/Users/swast/OneDrive/Desktop/Python Project/FileForge/Backup")
 fp=input("Enter the directory to sort: ")
+fp=fp.replace('"','')
 files_path=Path(fp)
 dp=input("Enter the destination for sorted files: ")
+dp=dp.replace('"','')
 destination=Path(dp)
 if not fp:
     files_path=Path("C:/Users/swast/OneDrive/Desktop/Python Project/FileForge/Raw")
@@ -26,38 +28,42 @@ with open(dict_path,'r') as file:
 def transporter():
     copymove=input("Copy or move?: ")
     #Move sorted source to target
-    if copymove.lower().strip()=="move":
-        for filename in files_path.iterdir():
-            if str(filename.suffix) in filetype:
-                Path(destination/ filetype[str(filename.suffix)]).mkdir(parents=True, exist_ok=True)
-                shutil.copy(files_path/ str(filename.name), destination/ filetype[str(filename.suffix)])
-                shutil.copy(files_path/ str(filename.name), rawpath)
-            else:
-                typeinput=input(f"What is the type of file called with '{str(filename.suffix)}' extension ?")
-                filetype[str(filename.suffix)]=typeinput
-                Path(destination/ filetype[str(filename.suffix)]).mkdir(parents=True, exist_ok=True)
-                shutil.copy(files_path/ str(filename.name), destination/ filetype[str(filename.suffix)])
-                shutil.copy(files_path/ str(filename.name), rawpath)
-                print(f"Added {str(filename.suffix)} as {typeinput}")
-        for file in files_path.iterdir():
-            f_dir=Path(files_path/ str(file.name))
-            f_dir.unlink()
-     
-    #copy to target
-    elif copymove.lower().strip()=="copy":
-        for filename in files_path.iterdir():
-            if str(filename.suffix) in filetype:
-                Path(destination/ filetype[str(filename.suffix)]).mkdir(parents=True, exist_ok=True)
-                shutil.copy(files_path/ str(filename.name), destination/ filetype[str(filename.suffix)])
-            else:
-                typeinput=input(f"What is the type of file called with '{str(filename.suffix)}' extension ?")
-                filetype[str(filename.suffix)]=typeinput
-                Path(destination/ filetype[str(filename.suffix)]).mkdir(parents=True, exist_ok=True)
-                shutil.copy(files_path/ str(filename.name), destination/ filetype[str(filename.suffix)])
-                print(f"Added {str(filename.suffix)} as {typeinput}")
-    else:
-         print("Invalid command")
-         transporter()
+    try:
+        if copymove.lower().strip()=="move":
+            for filename in files_path.iterdir():
+                if str(filename.suffix) in filetype:
+                    Path(destination/ filetype[str(filename.suffix)]).mkdir(parents=True, exist_ok=True)
+                    shutil.copy(files_path/ str(filename.name), destination/ filetype[str(filename.suffix)])
+                    shutil.copy(files_path/ str(filename.name), rawpath)
+                else:
+                    typeinput=input(f"What is the type of file called with '{str(filename.suffix)}' extension ?")
+                    filetype[str(filename.suffix)]=typeinput
+                    Path(destination/ filetype[str(filename.suffix)]).mkdir(parents=True, exist_ok=True)
+                    shutil.copy(files_path/ str(filename.name), destination/ filetype[str(filename.suffix)])
+                    shutil.copy(files_path/ str(filename.name), rawpath)
+                    print(f"Added {str(filename.suffix)} as {typeinput}")
+            for file in files_path.iterdir():
+                f_dir=Path(files_path/ str(file.name))
+                f_dir.unlink()
+        
+        #copy to target
+        elif copymove.lower().strip()=="copy":
+            for filename in files_path.iterdir():
+                if str(filename.suffix) in filetype:
+                    Path(destination/ filetype[str(filename.suffix)]).mkdir(parents=True, exist_ok=True)
+                    shutil.copy(files_path/ str(filename.name), destination/ filetype[str(filename.suffix)])
+                else:
+                    typeinput=input(f"What is the type of file called with '{str(filename.suffix)}' extension ?")
+                    filetype[str(filename.suffix)]=typeinput
+                    Path(destination/ filetype[str(filename.suffix)]).mkdir(parents=True, exist_ok=True)
+                    shutil.copy(files_path/ str(filename.name), destination/ filetype[str(filename.suffix)])
+                    print(f"Added {str(filename.suffix)} as {typeinput}")
+        else:
+            print("Invalid command")
+            transporter()
+    except Exception as e:
+         print(e)
+         pass
 
 #Some commands
 def repeat():
