@@ -3,7 +3,8 @@ import shutil
 import json
 from collections import Counter
 #taking in target and destination folders
-print("\n LEAVE EMPTY IF DEFAULT PATHS ARE TO BE USED \n")
+print('''\nLEAVE EMPTY IF DEFAULT PATHS ARE TO BE USED 
+Some commands: quantity,tree,restore,repeat\n''')
 
 rawpath=Path("C:/Users/swast/OneDrive/Desktop/Python Project/FileForge/Backup")
 fp=input("Enter the directory to sort: ")
@@ -76,27 +77,34 @@ def repeat():
     with open(dict_path,'r') as file:
             filetype=json.load(file)
     transporter()
-
-        
+  
 def restore():
     for rawfile in rawpath.iterdir():
          shutil.move(rawpath/ str(rawfile.name), files_path)
     for datafile in destination.iterdir():
          shutil.rmtree(destination/ str(datafile))
+    print("Target directory deleted, Source directory restored")
 def quantity(dirs):
-     for dir in dirs.iterdir():
-          for i,q in enumerate(dir.iterdir(),start=1):
-               continue
-          print(f"{dir.stem}={i}")
+    try:
+        for dir in dirs.iterdir():
+            for i,q in enumerate(dir.iterdir(),start=1):
+                continue
+            print(f"{dir.stem}={i}")
+    except:
+         pass
+
 def tree(dirs):
-    dir_tree=dict()
-    for dir in dirs.iterdir():
-          dir_tree[str(dir.stem)]=[str(f.name) for f in dir.iterdir()]
-    print(f"\n{str(destination.stem)}")
-    for folder in dir_tree:
-         print(f"->{folder}")
-         for item in dir_tree[folder]:
-              print(f"  ->{item}")
+    try:
+        dir_tree=dict()
+        for dir in dirs.iterdir():
+            dir_tree[str(dir.stem)]=[str(f.name) for f in dir.iterdir()]
+        print(f"\n{str(destination.stem)}")
+        for folder in dir_tree:
+            print(f"->{folder}")
+            for item in dir_tree[folder]:
+                print(f"  ->{item}")
+    except:
+         pass
 transporter()
 #Command getter
 while True:
@@ -109,6 +117,7 @@ while True:
          repeat()
     elif cmd.strip().lower()=="tree":
             tree(destination)
+
     elif cmd.strip().lower()=="restore":
             restore()
     else:
