@@ -14,12 +14,12 @@ dp=input("Enter the destination for sorted files: ")
 dp=dp.replace('"','')
 destination=Path(dp)
 if not fp:
-    files_path=Path("C:/Users/swast/OneDrive/Desktop/Python Project/FileForge/Raw")
+    files_path=Path(__file__).parent/ "Raw"
 if not dp:
-    destination=Path("C:/Users/swast/OneDrive/Desktop/Python Project/FileForge/Data")
+    destination=Path(__file__).parent/ "Data"
 
 #loading dictionaries that tell which extension refers to which type of file
-dict_path=Path('C:/Users/swast/OneDrive/Desktop/Python Project/FileForge/file_dict.json')
+dict_path=Path(__file__).parent/ "file_dict.json"
 filetype=dict()
 with open(dict_path,'r') as file:
         filetype=json.load(file)
