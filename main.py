@@ -5,8 +5,8 @@ from collections import Counter
 #taking in target and destination folders
 print('''\nLEAVE EMPTY IF DEFAULT PATHS ARE TO BE USED 
 Some commands: quantity,tree,restore,repeat\n''')
-
-rawpath=Path("C:/Users/swast/OneDrive/Desktop/Python Project/FileForge/Backup")
+rawpath = Path(__file__).parent/ "Backup"
+#rawpath=Path("C:/Users/swast/OneDrive/Desktop/Python Project/FileForge/Backup")
 fp=input("Enter the directory to sort: ")
 fp=fp.replace('"','')
 files_path=Path(fp)
